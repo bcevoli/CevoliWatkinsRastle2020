@@ -1,12 +1,12 @@
 # What is semantic diversity and why does it facilitate visual word recognition?
  
-This repository contains data, materials and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (2020). A pre-print of the manuscript submitted to the journal Behavior Research Methods is available on PsyArXiv.
+This repository contains data, materials and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (submitted). A pre-print of the manuscript submitted to the journal Behavior Research Methods is available on PsyArXiv.
 
 
 
 ## Instruction
 
-To replicate the semantic diversity procedure as well as the analysis reported in Cevoli et al. (2020), it is necessary to compute the following steps:
+To replicate the semantic diversity procedure as well as the analysis reported in the pre-print, it is necessary to compute the following steps:
 1. Run the *SemanticDiversityProcedure_LSAbasedApproach_Replication.ipynb* notebook found in */procedure* to obtain contextual representations and the semantic diversity metric.
 2. Run the *SemanticDiversityProcedure_LSAbasedApproach_Results_Comparison.ipynb* notebook found in */procedure* to compare the results obtained with measures previsouly reported by Hoffman et al. (2013). Please note that in order to produce the figure in this notebook it is necessary to run the code of point 1 multiple times while chnaging the parameters *lemmatization* and *svUnweighting*, which are True and False by deafult respectively. 
 3. Run the *A1_ValidationAnalysis.R* script found in */analysis* to replicate the analysis of the newly computed measure of semantic diversity on BLP and ELP.
