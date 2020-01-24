@@ -14,7 +14,7 @@ To replicate the semantic diversity procedure as well as the analysis reported i
 5. Run the *SemanticDiversityProcedure_LSAbasedApproach_VisualExploration_AmbiguityCaseStudy* notebook found in */procedure* to plot contextual representations of three highly ambiguous words (*calf*, *pupil* and *mole*). 
 6. Run the *SemanticDiversityProcedure_LSAbasedApproach_VisualExploration_CorpusMetaData* notebook found in */procedure* to plot contextual representations of the entire corpus against metadata.
 
-Eitherwise, it is also possible to run the statistical analysis only as the ouput data of the semantic diveristy procedure is already provided in the */data* folder.
+Eitherwise, it is also possible to run the statistical analyses only as the ouput data of the semantic diveristy procedure is already provided in the */data* folder.
 
 
 
