@@ -1,7 +1,7 @@
 
-# STUDY 1 - EXP. 1 Regression Analysis
+# A1 - Validation Analysis
 
-# Statistical analysis of Behavioural Data from following megastudies 
+# Statistical analysis of the newly computed semantic diversity measures on behavioural data from the following megastudies 
 # British Lexicon Project (BLP; Keuleers et al., 2012)
 # English Lexicon Project (ELP; Balota et al., 2007)
 
