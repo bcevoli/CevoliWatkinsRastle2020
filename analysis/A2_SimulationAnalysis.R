@@ -1010,7 +1010,7 @@ summary(armstrong.rt.m.p)
 
 #Results
 #Unambiguous - Homonymy (b<0.01,SE<0.01,t=1.33,p=0.18)
-#Unambiguous - Polysemy (b=0.02,SE<0.01,t=-5.91,p<0.01)
+#Unambiguous - Polysemy (b=0.02,SE<0.01,t=-2.66,p<0.01)
 
 #Print table with models summary
 tab_model(armstrong.rt.m.p, armstrong.rt.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
