@@ -42,6 +42,10 @@ lexicalVars = read.csv("stimuli/lexicalVariables.csv")
 lexicalVars$Length = nchar(as.character(lexicalVars$Word))
 setnames(lexicalVars, c("SemD_P2_W"), c("SemD"))
 lexicalVars = lexicalVars[,c("Word","SemD","Freq","Length")]
+#Add Age of Acquisition Ratings from Kuperman et al. (2012)
+Kuperman2012 = read.csv("data/***") #to download age of acquisition norms from Kuperman et al. (2012) 
+setnames(Kuperman2012, c("Rating.Mean"), c("AoA"))
+lexicalVars = merge(lexicalVars, Kuperman2012[,c("Word","AoA")], by="Word", all.x = TRUE)
 summary(lexicalVars)
 str(lexicalVars)
 ###############
@@ -114,31 +118,34 @@ dotplot(ranef(rt.m0, condVar=T))
 summary(blp.data.rt.clean)
 
 # Modelling
-blp.ld.rt.m <- lmer(log(RT) ~ scale(SemD)*scale(Freq) + 
-                      scale(Length) +
-                      scale(pRT) + scale(pACC) + scale(pLexicality) + 
+blp.ld.rt.m <- lmer(log(RT) ~ 
+                      scale(SemD)*scale(Freq) +
+                      scale(SemD)*scale(Length) +
+                      scale(SemD)*scale(AoA) +
+                      scale(AoA)*scale(Freq) +
+                      scale(AoA)*scale(Length) +
+                      scale(Length)*scale(Freq) +
+                      scale(pRT) +  
+                      scale(pACC) + 
+                      scale(pLexicality) + 
                       scale(Trial) +
-                     (1|SubjID) + (1|Word), 
-                    blp.data.rt.clean)
+                      (1|SubjID) + (1|Word), 
+                    blp.data.rt.clean, REML = TRUE)
 summary(blp.ld.rt.m)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)              6.386e+00  1.253e-02  7.745e+01 509.751  < 2e-16 ***
-#   scale(SemD)             -2.059e-03  7.502e-04  1.053e+04  -2.745  0.00606 ** 
-#   scale(Freq)             -7.656e-02  7.915e-04  1.101e+04 -96.723  < 2e-16 ***
-#   scale(Length)            1.148e-03  7.383e-04  1.068e+04   1.556  0.11982    
-# scale(pRT)               3.299e-02  3.274e-04  3.713e+05 100.764  < 2e-16 ***
-#   scale(pACC)              1.653e-04  3.250e-04  3.713e+05   0.509  0.61092    
-# scale(pLexicality)      -6.336e-04  4.477e-04  3.712e+05  -1.415  0.15699    
-# scale(Trial)            -4.254e-03  1.414e-03  1.057e+04  -3.007  0.00264 ** 
-#   scale(SemD):scale(Freq)  2.796e-03  7.092e-04  1.102e+04   3.943 8.11e-05 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Print table with model summary
-tab_model(blp.ld.rt.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "BLP Lexical Decision Data")
+blp.ld.rt.m.cd <- lmer(log(RT) ~ 
+                         scale(SemD)*scale(CD) + 
+                         scale(SemD)*scale(AoA) + 
+                         scale(SemD)*scale(Length) + 
+                         scale(AoA)*scale(CD) +
+                         scale(AoA)*scale(Length) +
+                         scale(Length)*scale(CD) +
+                         scale(pRT) + 
+                         scale(pACC) + 
+                         scale(pLexicality) + 
+                         scale(Trial) +
+                         (1|SubjID) + (1|Word), 
+                       blp.data.rt.clean, REML = TRUE)
+summary(blp.ld.rt.m.cd)
 
 #Plot effects
 blp.rt.FxS.e = as.data.frame(effect(term="scale(SemD):scale(Freq)", mod=blp.ld.rt.m, xlevels=list(SemD=10, Freq=6)))
@@ -159,36 +166,40 @@ ggsave("figures/A1_ValidationAnalysis_BLP_RT_Interaction_FreqxSemD.png", blp.rt.
 
 ##########################
 
-# Accurary Analysis #
+# Accuracy Analysis #
 #####################
-
 blp.data.acc = blp.data
-blp.acc.m <- glmer(ACC ~ scale(SemD)*scale(Freq) +
-                     scale(Length) +
-                     scale(pRT) + scale(pACC) + scale(pLexicality) + 
+blp.acc.m <- glmer(ACC ~ 
+                     scale(SemD)*scale(Freq) + 
+                     scale(SemD)*scale(Length) + 
+                     scale(SemD)*scale(AoA) + 
+                     scale(AoA)*scale(Freq) +
+                     scale(AoA)*scale(Length) +
+                     scale(Length)*scale(Freq) +
+                     scale(pRT) + 
+                     scale(pACC) + 
+                     scale(pLexicality) + 
                      scale(Trial) +
-                    (1|SubjID) + (1|Word), 
-                    blp.data.acc, 
-                    family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+                     (1|SubjID) + (1|Word), 
+                   blp.data.acc, 
+                   family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
 summary(blp.acc.m)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-#   (Intercept)              2.972217   0.077558  38.322  < 2e-16 ***
-#   scale(SemD)              0.068960   0.016001   4.310 1.63e-05 ***
-#   scale(Freq)              1.500007   0.017907  83.768  < 2e-16 ***
-#   scale(Length)            0.657733   0.015702  41.889  < 2e-16 ***
-#   scale(pRT)               0.143198   0.006780  21.122  < 2e-16 ***
-#   scale(pACC)              0.022375   0.005302   4.220 2.44e-05 ***
-#   scale(pLexicality)      -0.012288   0.011595  -1.060    0.289    
-#   scale(Trial)             0.008717   0.028359   0.307    0.759    
-#   scale(SemD):scale(Freq) -0.077865   0.016049  -4.852 1.22e-06 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-#Print table with model summary
-tab_model(blp.acc.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "BLP Lexical Decision Data")
+blp.acc.m.cd <- glmer(ACC ~ 
+                        scale(SemD)*scale(CD) + 
+                        scale(SemD)*scale(AoA) + 
+                        scale(SemD)*scale(Length) + 
+                        scale(AoA)*scale(CD) +
+                        scale(AoA)*scale(Length) +
+                        scale(Length)*scale(CD) +
+                        scale(pRT) + 
+                        scale(pACC) + 
+                        scale(pLexicality) + 
+                        scale(Trial) +
+                        (1|SubjID) + (1|Word), 
+                      blp.data.acc, 
+                      family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+summary(blp.acc.m.cd)
 ###################
 
 
@@ -259,32 +270,35 @@ dotplot(ranef(rt.m0, condVar=T))
 summary(elp.ld.rt.clean)
 
 # Modelling
-elp.ld.rt.m <- lmer(log(RT) ~ scale(SemD)*scale(Freq) + 
-                      scale(Length) +
-                      scale(pRT) + scale(pACC) + scale(pLexicality) + 
+elp.ld.rt.m <- lmer(log(RT) ~ 
+                      scale(SemD)*scale(Freq) + 
+                      scale(SemD)*scale(Length) + 
+                      scale(SemD)*scale(AoA) + 
+                      scale(AoA)*scale(Freq) +
+                      scale(AoA)*scale(Length) +
+                      scale(Length)*scale(Freq) +
+                      scale(pRT) + 
+                      scale(pACC) + 
+                      scale(pLexicality) + 
                       scale(Trial) +
                       (1|SubjID) + (1|Word), 
-                    elp.ld.rt.clean)
+                    elp.ld.rt.clean, REML = TRUE)
 summary(elp.ld.rt.m)
-# Fixed effects:
-#   Estimate Std. Error         df  t value Pr(>|t|)    
-# (Intercept)              6.551e+00  6.082e-03  7.986e+02 1077.050  < 2e-16 ***
-#   scale(SemD)             -7.615e-03  7.350e-04  1.761e+04  -10.359  < 2e-16 ***
-#   scale(Freq)             -7.491e-02  7.793e-04  1.806e+04  -96.127  < 2e-16 ***
-#   scale(Length)            5.596e-02  7.524e-04  1.793e+04   74.373  < 2e-16 ***
-#   scale(pRT)               5.394e-02  3.761e-04  5.155e+05  143.432  < 2e-16 ***
-#   scale(pACC)              1.450e-03  3.329e-04  5.150e+05    4.355 1.33e-05 ***
-#   scale(pLexicality)      -1.922e-02  3.292e-04  5.156e+05  -58.377  < 2e-16 ***
-#   scale(Trial)            -1.112e-02  3.267e-04  5.150e+05  -34.022  < 2e-16 ***
-#   scale(SemD):scale(Freq)  1.449e-03  6.962e-04  1.794e+04    2.081   0.0374 *  
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+elp.ld.rt.m.cd <- lmer(log(RT) ~ 
+                         scale(SemD)*scale(CD) + 
+                         scale(SemD)*scale(AoA) + 
+                         scale(SemD)*scale(Length) + 
+                         scale(AoA)*scale(CD) +
+                         scale(AoA)*scale(Length) +
+                         scale(Length)*scale(CD) +
+                         scale(pRT) + 
+                         scale(pACC) + 
+                         scale(pLexicality) + 
+                         scale(Trial) +
+                         (1|SubjID) + (1|Word), 
+                       elp.ld.rt.clean, REML = TRUE)
+summary(elp.ld.rt.m.cd)
 
-
-#Print table with model summary
-tab_model(elp.ld.rt.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "ELP Lexical Decision Data")
 
 #Plot Effects
 elp.rt.FxS.e = as.data.frame(effect(term="scale(SemD):scale(Freq)", mod=elp.ld.rt.m, xlevels=list(SemD=10, Freq=6)))
@@ -304,37 +318,42 @@ ggsave("figures/A1_ValidationAnalysis_ELP_LD_RT_Interaction_FreqxSemD.png", elp.
        width = 7, height = 9, dpi = 300, type = "cairo");
 ##########################
 
-# Accurary Analysis #
+# Accuracy Analysis #
 #####################
 
 elp.ld.data.acc = elp.ld.data
-
-elp.ld.acc.m <- glmer(ACC ~ scale(SemD)*scale(Freq) +
-                     scale(Length) +
-                     scale(pRT) + scale(pACC) + scale(pLexicality) + 
-                     scale(Trial) +
-                     (1|SubjID) + (1|Word), 
-                   elp.ld.data.acc, 
-                   family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+elp.ld.acc.m <- glmer(ACC ~ 
+                        scale(SemD)*scale(Freq) + 
+                        scale(SemD)*scale(Length) + 
+                        scale(SemD)*scale(AoA) + 
+                        scale(AoA)*scale(Freq) +
+                        scale(AoA)*scale(Length) +
+                        scale(Length)*scale(Freq) +
+                        scale(pRT) + 
+                        scale(pACC) + 
+                        scale(pLexicality) + 
+                        scale(Trial) +
+                        (1|SubjID) + (1|Word), 
+                      elp.ld.data.acc, 
+                      family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
 summary(elp.ld.acc.m)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)              2.906398   0.031254  92.992  < 2e-16 ***
-#   scale(SemD)              0.118817   0.011325  10.491  < 2e-16 ***
-#   scale(Freq)              1.001845   0.012395  80.826  < 2e-16 ***
-#   scale(Length)            0.407736   0.011390  35.797  < 2e-16 ***
-#   scale(pRT)               0.091688   0.005196  17.644  < 2e-16 ***
-#   scale(pACC)              0.017532   0.004453   3.937 8.25e-05 ***
-#   scale(pLexicality)       0.140174   0.004687  29.908  < 2e-16 ***
-#   scale(Trial)            -0.037114   0.004639  -8.000 1.24e-15 ***
-#   scale(SemD):scale(Freq) -0.032294   0.011088  -2.913  0.00358 ** 
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-#Print table with model summary
-tab_model(elp.ld.acc.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "ELP Lexical Decision Data")
+
+elp.ld.acc.m.cd <- glmer(ACC ~ 
+                           scale(SemD)*scale(CD) + 
+                           scale(SemD)*scale(AoA) + 
+                           scale(SemD)*scale(Length) + 
+                           scale(AoA)*scale(CD) +
+                           scale(AoA)*scale(Length) +
+                           scale(Length)*scale(CD) +
+                           scale(pRT) + 
+                           scale(pACC) + 
+                           scale(pLexicality) + 
+                           scale(Trial) +
+                           (1|SubjID) + (1|Word), 
+                         elp.ld.data.acc, 
+                         family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+summary(elp.ld.acc.m.cd)
 #####################
 
 
@@ -411,30 +430,32 @@ dotplot(ranef(rt.m0, condVar=T))
 summary(elp.nmg.rt.clean)
 
 # Modelling
-elp.nmg.rt.m <- lmer(log(RT) ~ scale(SemD)*scale(Freq) + 
-                      scale(Length) +
-                      scale(pRT) + scale(pACC) +  
-                      scale(Trial) +
-                      (1|SubjID) + (1|Word), 
-                    elp.nmg.rt.clean)
+elp.nmg.rt.m <- lmer(log(RT) ~ 
+                       scale(SemD)*scale(Freq) + 
+                       scale(SemD)*scale(Length) + 
+                       scale(SemD)*scale(AoA) + 
+                       scale(AoA)*scale(Freq) +
+                       scale(AoA)*scale(Length) +
+                       scale(Length)*scale(Freq) +
+                       scale(pRT) +  
+                       scale(pACC) + 
+                       scale(Trial) +
+                       (1|SubjID) + (1|Word), 
+                     elp.nmg.rt.clean, REML = TRUE)
 summary(elp.nmg.rt.m)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)              6.533e+00  6.939e-03  4.104e+02 941.491  < 2e-16 ***
-#   scale(SemD)             -3.626e-03  7.096e-04  1.802e+04  -5.111 3.24e-07 ***
-#   scale(Freq)             -4.955e-02  7.491e-04  1.814e+04 -66.149  < 2e-16 ***
-#   scale(Length)            5.245e-02  7.207e-04  1.811e+04  72.773  < 2e-16 ***
-#   scale(pRT)               2.652e-02  3.206e-04  4.173e+05  82.725  < 2e-16 ***
-#   scale(pACC)              8.705e-04  3.062e-04  4.172e+05   2.843  0.00447 ** 
-#   scale(Trial)            -8.679e-03  2.759e-04  4.176e+05 -31.460  < 2e-16 ***
-#   scale(SemD):scale(Freq)  2.092e-03  6.711e-04  1.821e+04   3.117  0.00183 ** 
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Print table with model summary
-tab_model(elp.nmg.rt.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "ELP Naming Data")
+elp.nmg.rt.m.cd = lmer(log(RT) ~ 
+                         scale(SemD)*scale(CD) + 
+                         scale(SemD)*scale(AoA) + 
+                         scale(SemD)*scale(Length) + 
+                         scale(AoA)*scale(CD) +
+                         scale(AoA)*scale(Length) +
+                         scale(Length)*scale(CD) +
+                         scale(pRT) + 
+                         scale(pACC) + 
+                         scale(Trial) +
+                         (1|SubjID) + (1|Word), 
+                       elp.nmg.rt.clean, REML = TRUE)
+summary(elp.nmg.rt.m.cd)
 
 #Plot Effects
 elp.rt.FxS.e = as.data.frame(effect(term="scale(SemD):scale(Freq)", mod=elp.nmg.rt.m, xlevels=list(SemD=10, Freq=6)))
@@ -456,36 +477,42 @@ ggsave("A1_ValidationAnalysis_ELP_NMG_RT_Interaction_FreqxSemD.png", elp.nmg.rt.
 ##########################
 
 
-# Accurary Analysis #
+# Accuracy Analysis #
 #####################
-
 elp.nmg.data.acc = elp.nmg.data
 
-elp.nmg.acc.m <- glmer(ACC ~ scale(SemD)*scale(Freq) +
-                        scale(Length) +
-                        scale(pRT) + scale(pACC) + 
-                        scale(Trial) +
-                        (1|SubjID) + (1|Word), 
-                      elp.nmg.data.acc, 
-                      family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+elp.nmg.acc.m <- glmer(ACC ~
+                         scale(SemD)*scale(Freq) + 
+                         scale(SemD)*scale(Length) + 
+                         scale(SemD)*scale(AoA) + 
+                         scale(AoA)*scale(Freq) +
+                         scale(AoA)*scale(Length) +
+                         scale(Length)*scale(Freq) +
+                         scale(pRT) + 
+                         scale(pACC) +  
+                         scale(Trial) +
+                         (1|SubjID) + (1|Word), 
+                       elp.nmg.data.acc, 
+                       family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
 summary(elp.nmg.acc.m)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)              3.688522   0.039079  94.386  < 2e-16 ***
-#   scale(SemD)              0.020663   0.013050   1.583   0.1133    
-# scale(Freq)              0.744456   0.014117  52.735  < 2e-16 ***
-#   scale(Length)           -0.006147   0.012678  -0.485   0.6278    
-# scale(pRT)              -0.107995   0.006240 -17.307  < 2e-16 ***
-#   scale(pACC)              0.050434   0.006413   7.864 3.73e-15 ***
-#   scale(Trial)             0.407896   0.023313  17.497  < 2e-16 ***
-#   scale(SemD):scale(Freq) -0.030396   0.012611  -2.410   0.0159 *  
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-#Print table with model summary
-tab_model(elp.nmg.acc.m, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "ELP Naming Data")
+elp.nmg.acc.m.cd <- glmer(ACC ~
+                            scale(SemD)*scale(CD) + 
+                            scale(SemD)*scale(AoA) + 
+                            scale(SemD)*scale(Length) + 
+                            scale(AoA)*scale(CD) +
+                            scale(AoA)*scale(Length) +
+                            scale(Length)*scale(CD) +
+                            scale(pRT) + 
+                            scale(pACC) + 
+                            scale(Trial) +
+                            (1|SubjID) + (1|Word), 
+                          elp.nmg.data.acc, 
+                          family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
+summary(elp.nmg.acc.m.cd)
+
 #####################
+
+
 
 

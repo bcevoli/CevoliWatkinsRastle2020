@@ -66,7 +66,8 @@ blp.ld.data = subset(blp.ld.data, lexicality==1)
 #Subset only columns of interest (rt col: outliers and inaccurate responses set to NA)
 blp.ld.data = blp.ld.data[c("spelling","participant","block","trial","accuracy","rt.raw","previous.rt","previous.accuracy","pLexicality")]
 #Rename columns
-setnames(blp.ld.data, c("spelling","participant","block","trial","accuracy","rt.raw", "previous.rt", "previous.accuracy"), c("Word","SubjID","Block","Trial","ACC","RT","pRT","pACC"))
+setnames(blp.ld.data, c("spelling","participant","block","trial","accuracy","rt.raw", "previous.rt", "previous.accuracy"), 
+         c("Word","SubjID","Block","Trial","ACC","RT","pRT","pACC"))
 #Look up the number of words (28,730)
 length(unique(blp.ld.data$Word)) 
 summary(blp.ld.data)
@@ -86,7 +87,7 @@ elp.ld.data = subset(elp.ld.data, Type==1)
 #Look up the number of words (40,481)
 length(unique(elp.ld.data$Word)) 
 summary(elp.ld.data)
-#remove strage negative RT
+#remove strange negative RT
 elp.ld.data = subset(elp.ld.data, RT>0)
 #Look up the number of words (40,481)
 length(unique(elp.ld.data$Word)) 
@@ -143,26 +144,6 @@ rodd.blp.rt$Meanings <- relevel(rodd.blp.rt$Meanings, ref = "One")
 rodd.exp1.blp.rt.m = lm(invRT ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
                    rodd.blp.rt)
 summary(rodd.exp1.blp.rt.m)
-# Residuals:
-#   Min       1Q   Median       3Q      Max 
-# -2.48109 -0.25341 -0.01956  0.23258  1.22741 
-# 
-# Coefficients:
-#   Estimate Std. Error  t value Pr(>|t|)    
-# (Intercept)        -1.937325   0.009593 -201.948  < 2e-16 ***
-#   MeaningsMany        0.023971   0.012143    1.974 0.048417 *  
-#   scale(nSenses_WMD) -0.013501   0.006056   -2.229 0.025832 *  
-#   scale(coltN)        0.015710   0.006415    2.449 0.014350 *  
-#   scale(Freq)        -0.057227   0.005478  -10.447  < 2e-16 ***
-#   scale(Length)       0.009910   0.006474    1.531 0.125868    
-# scale(Conc.M)      -0.018483   0.005068   -3.647 0.000267 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# 
-# Residual standard error: 0.3899 on 6407 degrees of freedom
-# (151 observations deleted due to missingness)
-# Multiple R-squared:  0.02576,	Adjusted R-squared:  0.02484 
-# F-statistic: 28.23 on 6 and 6407 DF,  p-value: < 2.2e-16
 
 #Plot
 m.plot = lm(RT ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M), rodd.blp.rt)
@@ -232,26 +213,7 @@ rodd.elp.rt$Meanings <- relevel(rodd.elp.rt$Meanings, ref = "One")
 rodd.elp.rt.m = lm(invRT ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
                    rodd.elp.rt)
 summary(rodd.elp.rt.m)
-# Residuals:
-#   Min       1Q   Median       3Q      Max 
-# -2.98017 -0.24985 -0.00569  0.26002  1.14970 
-# 
-# Coefficients:
-#   Estimate Std. Error  t value Pr(>|t|)    
-# (Intercept)        -1.813385   0.011470 -158.096  < 2e-16 ***
-#   MeaningsMany        0.036284   0.014510    2.501 0.012430 *  
-#   scale(nSenses_WMD) -0.014073   0.007165   -1.964 0.049562 *  
-#   scale(coltN)        0.013399   0.007641    1.754 0.079572 .  
-# scale(Freq)        -0.056975   0.006553   -8.694  < 2e-16 ***
-#   scale(Length)       0.028424   0.008110    3.505 0.000461 ***
-#   scale(Conc.M)      -0.014086   0.006029   -2.336 0.019512 *  
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# 
-# Residual standard error: 0.4136 on 5083 degrees of freedom
-# (278 observations deleted due to missingness)
-# Multiple R-squared:  0.02892,	Adjusted R-squared:  0.02777 
-# F-statistic: 25.23 on 6 and 5083 DF,  p-value: < 2.2e-16
+
 
 #Plot
 m.plot = lm(RT ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
@@ -292,26 +254,6 @@ rodd.exp1.semd$Meanings <- relevel(rodd.exp1.semd$Meanings, ref = "One")
 rodd.exp1.semd.m = lm(SemD ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
                       rodd.exp1.semd)
 summary(rodd.exp1.semd.m)
-# Residuals:
-#   Min       1Q   Median       3Q      Max 
-# -0.58984 -0.17932  0.00601  0.17353  0.67135 
-# 
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)         2.224456   0.038371  57.973  < 2e-16 ***
-#   MeaningsMany        0.051402   0.048367   1.063 0.289471    
-# scale(nSenses_WMD)  0.022481   0.023772   0.946 0.345701    
-# scale(coltN)        0.008564   0.025571   0.335 0.738132    
-# scale(Freq)         0.074274   0.022253   3.338 0.001047 ** 
-#   scale(Length)       0.032783   0.026869   1.220 0.224197    
-# scale(Conc.M)      -0.068919   0.020222  -3.408 0.000824 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# 
-# Residual standard error: 0.2526 on 163 degrees of freedom
-# (12 observations deleted due to missingness)
-# Multiple R-squared:  0.2091,	Adjusted R-squared:   0.18 
-# F-statistic: 7.184 on 6 and 163 DF,  p-value: 8.19e-07
 
 #Plot
 rodd.exp1.semd.senses.e = as.data.frame(effect(term="scale(nSenses_WMD)", mod=rodd.exp1.semd.m, xlevels=list(nSenses_WMD=2)))
@@ -393,67 +335,27 @@ summary(rodd.blp.rt)
 rodd.rt.item <- aggregate(invRT ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp.rt)
 rodd.rt.item.aov = aov(invRT ~ Senses*Meanings + Freq + Length, data = rodd.rt.item)
 summary(rodd.rt.item.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses            1 0.0831  0.0831  15.266 0.000154 ***
-#   Meanings          1 0.0178  0.0178   3.278 0.072664 .  
-# Freq              1 0.3886  0.3886  71.375 7.35e-14 ***
-#   Length            1 0.0173  0.0173   3.177 0.077181 .  
-# Senses:Meanings   1 0.0098  0.0098   1.806 0.181528    
-# Residuals       122 0.6642  0.0054                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 #BySubj ANOVA
 rodd.rt.subj <- aggregate(invRT ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp.rt)
 rodd.rt.subj.aov = aov(invRT ~  Senses*Meanings + Freq + Length, data = rodd.rt.subj)
 summary(rodd.rt.subj.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1    3.1   3.071  18.864 1.43e-05 ***
-#   Meanings           1    0.6   0.572   3.512   0.0610 .  
-# Freq               1   13.7  13.655  83.875  < 2e-16 ***
-#   Length             1    0.6   0.634   3.892   0.0486 *  
-#   Senses:Meanings    1    0.3   0.345   2.121   0.1454    
-# Residuals       4736  771.1   0.163                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 describeBy(rodd.blp.rt$RT, group = rodd.blp.rt$Senses) 
 diff(as.matrix(aggregate(rodd.blp.rt$RT, by=list(rodd.blp.rt$Senses), FUN=mean)[2])) #15ms difference
 describeBy(rodd.blp.rt$RT, group = rodd.blp.rt$Meanings) 
 diff(as.matrix(aggregate(rodd.blp.rt$RT, by=list(rodd.blp.rt$Meanings), FUN=mean)[2])) #8ms difference
 
-#Results
-#Number of senses (F1(1,4726)=18.86, p<0.001, F2(1,121)=15.27, p<0.001) #15ms difference
-#Number of meanings (F1(1,4726)=3.5, p=0.06, F2(1,121)=3.28, p=0.07)  #8ms difference
-
-
 #UNTRANSFORMED RT
 #ByItem ANOVA
 rodd.rt.item <- aggregate(RT ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp.rt)
 rodd.rt.item.aov = aov(RT ~ Senses*Meanings + Freq + Length, data = rodd.rt.item)
 summary(rodd.rt.item.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses            1   8178    8178  14.114 0.000265 ***
-#   Meanings          1   1248    1248   2.155 0.144725    
-# Freq              1  37441   37441  64.617 6.63e-13 ***
-#   Length            1   1149    1149   1.983 0.161643    
-# Senses:Meanings   1   1774    1774   3.061 0.082705 .  
-# Residuals       122  70691     579                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
 #BySubj ANOVA
 rodd.rt.subj <- aggregate(RT ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp.rt)
 rodd.rt.subj.aov = aov(RT ~  Senses*Meanings + Freq + Length, data = rodd.rt.subj)
 summary(rodd.rt.subj.aov)
-# Df   Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1   305857  305857  17.173 3.47e-05 ***
-#   Meanings           1    43321   43321   2.432   0.1189    
-# Freq               1  1305787 1305787  73.318  < 2e-16 ***
-#   Length             1    43121   43121   2.421   0.1198    
-# Senses:Meanings    1    62006   62006   3.482   0.0621 .  
-# Residuals       4736 84348211   17810                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 #Plot
@@ -497,50 +399,6 @@ pirateplot(formula = RT ~ Meanings,
 dev.off();
 ##########################
 
-# Accuracy Analysis #
-#####################
-
-#Get accuracy data
-rodd.blp.acc = rodd.blp
-summary(rodd.blp.acc)
-
-#ByItem ANOVA
-rodd.acc.item <- aggregate(ACC ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp)
-rodd.acc.item.aov = aov(ACC ~ Senses*Meanings + Freq + Length, data = rodd.acc.item)
-summary(rodd.acc.item.aov)
-# Df  Sum Sq  Mean Sq F value   Pr(>F)    
-# Senses            1 0.00727 0.007267   9.413 0.002655 ** 
-#   Meanings          1 0.00002 0.000017   0.021 0.883772    
-# Freq              1 0.01160 0.011598  15.022 0.000173 ***
-#   Length            1 0.00110 0.001099   1.423 0.235152    
-# Senses:Meanings   1 0.00027 0.000273   0.353 0.553356    
-# Residuals       122 0.09419 0.000772                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#BySubj ANOVA
-rodd.acc.subj <- aggregate(ACC ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.blp)
-rodd.acc.subj.aov = aov(ACC ~ Senses*Meanings + Freq + Length, data = rodd.acc.subj)
-summary(rodd.acc.subj.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1   0.30  0.3027  12.346 0.000446 ***
-#   Meanings           1   0.00  0.0015   0.062 0.803376    
-# Freq               1   0.43  0.4316  17.601 2.77e-05 ***
-#   Length             1   0.05  0.0451   1.841 0.174873    
-# Senses:Meanings    1   0.01  0.0105   0.427 0.513308    
-# Residuals       4946 121.28  0.0245                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-describeBy(rodd.acc.item$ACC, group = rodd.acc.item$Senses) 
-diff(as.matrix(aggregate(rodd.acc.item$ACC, by=list(rodd.acc.item$Senses), FUN=mean)[2])) #1.51% difference
-describeBy(rodd.acc.item$ACC, group = rodd.acc.item$Meanings) 
-diff(as.matrix(aggregate(rodd.acc.item$ACC, by=list(rodd.acc.item$Meanings), FUN=mean)[2])) #0.07% difference
-
-#Results
-#Number of senses (F1(1,4946)=12.35, p<0.001, F2(1,121)=9.41, p<0.01) #1.51% difference
-#Number of meanings (F1(1,4946)=0.06, p=0.80, F2(1,121)=0.02, p=0.88)  
-#####################
 
 # ELP #
 # Reaction Time Analysis #
@@ -586,38 +444,17 @@ summary(rodd.elp.rt)
 rodd.rt.item <- aggregate(logRT ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp.rt)
 rodd.rt.item.aov = aov(logRT ~ Senses*Meanings + Freq + Length, data = rodd.rt.item)
 summary(rodd.rt.item.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses            1 0.0209 0.02087   6.334   0.0131 *  
-#   Meanings          1 0.0073 0.00733   2.226   0.1383    
-# Freq              1 0.0822 0.08219  24.952 1.98e-06 ***
-#   Length            1 0.0092 0.00915   2.779   0.0981 .  
-# Senses:Meanings   1 0.0058 0.00583   1.770   0.1859    
-# Residuals       122 0.4019 0.00329                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 #BySubj ANOVA
 rodd.rt.subj <- aggregate(logRT ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp.rt)
 rodd.rt.subj.aov = aov(logRT ~  Senses*Meanings + Freq + Length, data = rodd.rt.subj)
 summary(rodd.rt.subj.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1   0.56  0.5563   7.230   0.0072 ** 
-#   Meanings           1   0.23  0.2303   2.993   0.0837 .  
-# Freq               1   2.30  2.3048  29.954 4.71e-08 ***
-#   Length             1   0.31  0.3077   3.998   0.0456 *  
-#   Senses:Meanings    1   0.17  0.1710   2.222   0.1361    
-# Residuals       3764 289.62  0.0769                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
 
 describeBy(rodd.elp.rt$RT, group = rodd.elp.rt$Senses) 
 diff(as.matrix(aggregate(rodd.elp.rt$RT, by=list(rodd.elp.rt$Senses), FUN=mean)[2])) #16ms difference
 describeBy(rodd.elp.rt$RT, group = rodd.elp.rt$Meanings) 
 diff(as.matrix(aggregate(rodd.elp.rt$RT, by=list(rodd.elp.rt$Meanings), FUN=mean)[2])) #8ms difference
-
-#Results
-#Number of senses (F1(1,3763)=7.23, p<0.001, F2(1,121)=6.33, p<0.05) #14ms difference
-#Number of meanings (F1(1,3764)=2.99, p=0.08, F2(1,121)=2.23, p=0.13)  #6ms difference
 
 
 #UNTRANSFORMED RT
@@ -625,28 +462,11 @@ diff(as.matrix(aggregate(rodd.elp.rt$RT, by=list(rodd.elp.rt$Meanings), FUN=mean
 rodd.rt.item <- aggregate(RT ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp.rt)
 rodd.rt.item.aov = aov(RT ~ Senses*Meanings + Freq + Length, data = rodd.rt.item)
 summary(rodd.rt.item.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses            1   9431    9431   8.474  0.00428 ** 
-#   Meanings          1   1861    1861   1.673  0.19836    
-# Freq              1  37025   37025  33.270 6.19e-08 ***
-#   Length            1   6179    6179   5.553  0.02005 *  
-#   Senses:Meanings   1    712     712   0.640  0.42526    
-# Residuals       122 135768    1113                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
 #BySubj ANOVA
 rodd.rt.subj <- aggregate(RT ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp.rt)
 rodd.rt.subj.aov = aov(RT ~  Senses*Meanings + Freq + Length, data = rodd.rt.subj)
 summary(rodd.rt.subj.aov)
-# Df   Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1   256316  256316  10.426  0.00125 ** 
-#   Meanings           1    58743   58743   2.389  0.12225    
-# Freq               1  1037529 1037529  42.201 9.31e-11 ***
-#   Length             1   195199  195199   7.940  0.00486 ** 
-#   Senses:Meanings    1    19647   19647   0.799  0.37141    
-# Residuals       3764 92539575   24585                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 #Plot
@@ -690,49 +510,6 @@ pirateplot(formula = RT ~ Meanings,
 dev.off();
 ##########################
 
-# Accuracy Analysis #
-#####################
-#Get accuracy data
-rodd.elp.acc = rodd.elp
-summary(rodd.elp.acc)
-
-#ByItem ANOVA
-rodd.acc.item <- aggregate(ACC ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp)
-rodd.acc.item.aov = aov(ACC ~ Senses*Meanings + Freq + Length, data = rodd.acc.item)
-summary(rodd.acc.item.aov)
-# Df  Sum Sq Mean Sq F value   Pr(>F)    
-# Senses            1 0.00706 0.00706   4.426   0.0374 *  
-#   Meanings          1 0.00024 0.00024   0.152   0.6973    
-# Freq              1 0.05472 0.05472  34.319 4.06e-08 ***
-#   Length            1 0.00180 0.00180   1.132   0.2895    
-# Senses:Meanings   1 0.00008 0.00008   0.051   0.8218    
-# Residuals       122 0.19451 0.00159                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#BySubj ANOVA
-rodd.acc.subj <- aggregate(ACC ~ SubjID + Senses + Meanings + Freq + Length, FUN=mean, rodd.elp)
-rodd.acc.subj.aov = aov(ACC ~ Senses*Meanings + Freq + Length, data = rodd.acc.subj)
-summary(rodd.acc.subj.aov)
-# Df Sum Sq Mean Sq F value   Pr(>F)    
-# Senses             1   0.23  0.2319   6.488   0.0109 *  
-#   Meanings           1   0.01  0.0102   0.285   0.5936    
-# Freq               1   1.81  1.8060  50.537 1.37e-12 ***
-#   Length             1   0.06  0.0616   1.724   0.1892    
-# Senses:Meanings    1   0.00  0.0027   0.077   0.7816    
-# Residuals       4169 148.98  0.0357                     
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-describeBy(rodd.acc.item$ACC, group = rodd.acc.item$Senses) 
-diff(as.matrix(aggregate(rodd.acc.item$ACC, by=list(rodd.acc.item$Senses), FUN=mean)[2])) #1.4% difference
-describeBy(rodd.acc.item$ACC, group = rodd.acc.item$Meanings) 
-diff(as.matrix(aggregate(rodd.acc.item$ACC, by=list(rodd.acc.item$Meanings), FUN=mean)[2])) #0.2% difference
-
-#Results
-#Number of senses (F1(1,4168)=6.4, p<0.05, F2(1,121)=4.43, p<0.05) #1.4% difference
-#Number of meanings (F1(1,4168)=0.28, p=0.59, F2(1,121)=0.15, p=0.70)  
-#####################
 
 # Semantic Diversity Simulation #
 #################################
@@ -745,18 +522,6 @@ summary(rodd.semd)
 rodd.semd.item <- aggregate(SemD ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.semd)
 rodd.semd.item.aov = aov(SemD ~ Senses*Meanings + Freq + Length, data = rodd.semd.item)
 summary(rodd.semd.item.aov)
-# Df Sum Sq Mean Sq F value Pr(>F)  
-# Senses            1  0.000 0.00000   0.000 0.9953  
-# Meanings          1  0.022 0.02176   0.385 0.5359  
-# Freq              1  0.104 0.10364   1.835 0.1780  
-# Length            1  0.159 0.15883   2.813 0.0961 .
-# Senses:Meanings   1  0.001 0.00102   0.018 0.8935  
-# Residuals       122  6.889 0.05647                 
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Results
-#SemD (F(1,121)<0.001, p=0.99)
 
 describeBy(rodd.semd.item$SemD, group = rodd.semd.item$Senses)
 diff(as.matrix(aggregate(rodd.semd.item$SemD, by=list(rodd.semd.item$Senses), FUN=mean)[2])) #0.0002 difference
@@ -921,12 +686,6 @@ armstrong.blp.rt.clean = trialClean
 ((nrow(armstrong.blp.rt)-nrow(armstrong.blp.rt.clean))/nrow(armstrong.blp.rt))*100 # 2.7% data removed
 summary(armstrong.blp.rt.clean)
 
-#Descriptives
-describeBy(armstrong.blp.rt.clean$RT, group = armstrong.blp.rt.clean$AmbiguityType)
-#Homonymy (M = 541ms, SD = 123ms)
-#Polysemy (M = 532ms, SD = 111ms)
-#Unambiguous (M = 540ms, SD = 117ms)
-
 #Check normality
 hist(armstrong.blp.rt.clean$RT)
 qqnorm(armstrong.blp.rt.clean$RT)
@@ -952,7 +711,7 @@ armstrong.rt.m.h = lmer(invRT ~
                           #Homonymy
                           scale(invDom) +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes) + 
                           #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
                           #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
                           scale(pRT) + scale(pACC) + scale(Trial) +  #lexicality of previous trial removed
@@ -960,21 +719,6 @@ armstrong.rt.m.h = lmer(invRT ~
                           (1|SubjID) + (1|Word), 
                         hSubset)
 summary(armstrong.rt.m.h)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)             -1.925e+00  2.165e-02  7.953e+01 -88.930  < 2e-16 ***
-#   scale(invDom)            7.113e-03  5.331e-03  1.644e+02   1.334 0.183993    
-# scale(ZipfFreq_Subtlex) -4.462e-02  6.131e-03  1.613e+02  -7.277 1.41e-11 ***
-#   scale(OLD20)            -9.732e-03  7.002e-03  1.657e+02  -1.390 0.166421    
-# scale(nsyl)              5.513e-03  1.023e-02  2.185e+03   0.539 0.590038    
-# scale(nPhon)            -2.437e-03  9.017e-03  2.260e+04  -0.270 0.787002    
-# scale(Length)            8.615e-03  6.880e-03  1.866e+02   1.252 0.212051    
-# scale(famfRes)          -2.620e-02  5.987e-03  1.679e+02  -4.376 2.12e-05 ***
-#   scale(pRT)               6.719e-02  2.025e-03  2.614e+04  33.183  < 2e-16 ***
-#   scale(pACC)              7.589e-03  1.952e-03  2.611e+04   3.889 0.000101 ***
-#   scale(Trial)            -1.248e-02  9.784e-03  2.192e+02  -1.275 0.203575    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 # UNAMBIGUOUS - POLYSEMY
@@ -983,7 +727,7 @@ armstrong.rt.m.p = lmer(invRT ~
                           #Polysemy
                           AmbiguityType +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes) + 
                           #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
                           #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
                           scale(pRT) + scale(pACC) + scale(Trial) +  #lexicality of previous trial removed
@@ -992,30 +736,6 @@ armstrong.rt.m.p = lmer(invRT ~
                         pSubset)
 
 summary(armstrong.rt.m.p)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)             -1.925e+00  2.049e-02  8.954e+01 -93.973  < 2e-16 ***
-#   AmbiguityTypePolysemy   -2.503e-02  9.396e-03  1.721e+02  -2.664 0.008461 ** 
-#   scale(ZipfFreq_Subtlex) -3.207e-02  5.428e-03  1.700e+02  -5.909 1.83e-08 ***
-#   scale(OLD20)            -4.705e-03  6.547e-03  1.711e+02  -0.719 0.473360    
-# scale(nsyl)              9.825e-03  1.537e-02  9.613e+03   0.639 0.522693    
-# scale(nPhon)            -4.154e-03  1.470e-02  2.830e+04  -0.283 0.777530    
-# scale(Length)            3.912e-03  6.622e-03  1.763e+02   0.591 0.555394    
-# scale(famfRes)          -2.005e-02  5.527e-03  1.743e+02  -3.629 0.000374 ***
-#   scale(pRT)               6.949e-02  1.869e-03  2.962e+04  37.186  < 2e-16 ***
-#   scale(pACC)              6.131e-03  1.802e-03  2.958e+04   3.403 0.000667 ***
-#   scale(Trial)            -2.532e-03  8.153e-03  2.093e+02  -0.311 0.756469    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Results
-#Unambiguous - Homonymy (b<0.01,SE<0.01,t=1.33,p=0.18)
-#Unambiguous - Polysemy (b=0.02,SE<0.01,t=-2.66,p<0.01)
-
-#Print table with models summary
-tab_model(armstrong.rt.m.p, armstrong.rt.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "Armstrong & Plaut (2016) Replication Analysis on BLP Lexical Decision Data")
 
 #Plot
 armstrong.blp.rt.clean$AmbiguityType <- factor(armstrong.blp.rt.clean$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
@@ -1046,98 +766,6 @@ grid.arrange(armstrong.blp.rt.p, nrow=1, ncol=1)
 dev.off()
 ##########################
 
-# Accuracy Analysis #
-#####################
-
-armstrong.blp.acc = armstrong.blp.clean
-summary(armstrong.blp.acc)
-#Descriptives
-describeBy(armstrong.blp.acc$ACC, group = armstrong.blp.acc$AmbiguityType)
-#Homonymy (M = 97%, SD = 0.17)
-#Polysemy (M = 99%, SD = 0.12)
-#Unambiguous (M = 98%, SD = 0.15)
-
-#Set polysemes and unambiguous word to have a single completely dominant interpretation (biggest=100)
-armstrong.blp.acc[["eDom_biggest"]][is.na(armstrong.blp.acc[["eDom_biggest"]])] = 100
-describeBy(armstrong.blp.acc$eDom_biggest, group = armstrong.blp.acc$AmbiguityType)
-
-#Modelling followeing Armstorng & Plaut (2016) procedure
-armstrong.blp.acc$AmbiguityType <- relevel(armstrong.blp.acc$AmbiguityType, ref = "Unambiguous")
-#get the inverse of dominant frequency to have higher values for balanced homonymous
-armstrong.blp.acc$invDom = 1000/(armstrong.blp.acc$eDom_biggest)
-
-# UNAMBIGUOUS - HOMONYMS
-hSubset = subset(armstrong.blp.acc, AmbiguityType=="Unambiguous" | AmbiguityType=="Homonymy")
-armstrong.acc.m.h = glmer(ACC ~ 
-                          #Homonymy
-                          scale(invDom) +
-                          #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
-                          #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
-                          #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
-                          scale(pRT) + scale(pACC) + scale(Trial) +  #lexicality of previous trial removed
-                          #random effects
-                          (1|SubjID) + (1|Word), 
-                          hSubset,
-                          family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
-summary(armstrong.acc.m.h)
-
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)              4.96212    0.19118  25.955  < 2e-16 ***
-#   scale(invDom)            0.01184    0.13444   0.088 0.929850    
-# scale(ZipfFreq_Subtlex)  0.47750    0.15612   3.059 0.002224 ** 
-#   scale(OLD20)             0.09152    0.18247   0.502 0.615983    
-# scale(nsyl)              0.00952    0.26243   0.036 0.971061    
-# scale(nPhon)             0.04734    0.23292   0.203 0.838946    
-# scale(Length)            0.07528    0.18412   0.409 0.682642    
-# scale(famfRes)           0.27508    0.14604   1.884 0.059624 .  
-# scale(pRT)               0.19561    0.05351   3.655 0.000257 ***
-#   scale(pACC)              0.17099    0.03499   4.886 1.03e-06 ***
-#   scale(Trial)            -0.07596    0.17313  -0.439 0.660868    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-# UNAMBIGUOUS - POLYSEMY
-pSubset = subset(armstrong.blp.acc, AmbiguityType=="Unambiguous" | AmbiguityType=="Polysemy")
-armstrong.acc.m.p = glmer(ACC ~ 
-                            #Polysemy
-                            AmbiguityType +
-                            #control variable
-                            scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
-                            #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
-                            #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
-                            scale(pRT) + scale(pACC) + scale(Trial) +  
-                            #random effects
-                            (1|SubjID) + (1|Word), 
-                          pSubset,
-                          family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
-summary(armstrong.acc.m.p)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)               5.69664    1.61413   3.529 0.000417 ***
-#   AmbiguityTypePolysemy     1.03718    0.37263   2.783 0.005379 ** 
-#   scale(ZipfFreq_Subtlex)   0.70835    0.21237   3.335 0.000852 ***
-#   scale(OLD20)              0.03958    0.26272   0.151 0.880259    
-# scale(nsyl)              -3.22365  338.80531  -0.010 0.992408    
-# scale(nPhon)              3.33023  341.21356   0.010 0.992213    
-# scale(Length)             0.27796    0.27789   1.000 0.317190    
-# scale(famfRes)            0.08063    0.20679   0.390 0.696606    
-# scale(pRT)                0.42960    0.07722   5.563 2.64e-08 ***
-#   scale(pACC)               0.15031    0.04236   3.549 0.000387 ***
-#   scale(Trial)             -0.26423    0.22769  -1.161 0.245840    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Results
-#Unambiguous - Homonymy (b=0.01,SE=0.13,t=0.08,p=92)
-#Unambiguous - Polysemy (b=1.03,SE=0.37,t=2.78,p<0.01)
-
-#Print table with models summary
-tab_model(armstrong.acc.m.p, armstrong.acc.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "Armstrong & Plaut (2016) Replication Analysis on BLP Lexical Decision Data")
-##########################
 
 # ELP #
 # Data screening #
@@ -1238,7 +866,7 @@ armstrong.rt.m.h = lmer(invRT ~
                           #Homonymy
                           scale(invDom) +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes) + 
                           #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
                           #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
                           scale(pRT) + scale(pACC) + scale(Trial) +  
@@ -1246,22 +874,6 @@ armstrong.rt.m.h = lmer(invRT ~
                           (1|SubjID) + (1|Word), 
                         hSubset)
 summary(armstrong.rt.m.h)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)             -1.900e+00  2.321e-02  7.993e+01 -81.843  < 2e-16 ***
-#   scale(invDom)            8.273e-03  5.866e-03  1.670e+02   1.410   0.1603    
-# scale(ZipfFreq_Subtlex) -4.486e-02  6.741e-03  1.640e+02  -6.655 4.06e-10 ***
-#   scale(OLD20)            -1.375e-02  7.713e-03  1.683e+02  -1.783   0.0764 .  
-# scale(nsyl)              4.022e-03  1.100e-02  2.101e+03   0.365   0.7148    
-# scale(nPhon)            -2.223e-03  9.641e-03  2.351e+04  -0.231   0.8176    
-# scale(Length)            1.273e-02  7.546e-03  1.887e+02   1.687   0.0933 .  
-# scale(famfRes)          -2.787e-02  6.581e-03  1.704e+02  -4.235 3.73e-05 ***
-#   scale(pRT)               7.870e-02  2.171e-03  2.685e+04  36.247  < 2e-16 ***
-#   scale(pACC)              1.043e-02  2.096e-03  2.682e+04   4.979 6.43e-07 ***
-#   scale(Trial)            -1.681e-02  1.070e-02  2.240e+02  -1.571   0.1177    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
 
 
 # UNAMBIGUOUS - POLYSEMY
@@ -1270,7 +882,7 @@ armstrong.rt.m.p = lmer(invRT ~
                           #Polysemy
                           AmbiguityType +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes) + 
                           #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
                           #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
                           scale(pRT) + scale(pACC) + scale(Trial) + 
@@ -1279,30 +891,7 @@ armstrong.rt.m.p = lmer(invRT ~
                         pSubset)
 
 summary(armstrong.rt.m.p)
-# Fixed effects:
-#   Estimate Std. Error         df t value Pr(>|t|)    
-# (Intercept)             -1.902e+00  2.186e-02  8.877e+01 -86.983  < 2e-16 ***
-#   AmbiguityTypePolysemy   -2.650e-02  9.826e-03  1.744e+02  -2.696 0.007695 ** 
-#   scale(ZipfFreq_Subtlex) -3.009e-02  5.680e-03  1.719e+02  -5.298 3.55e-07 ***
-#   scale(OLD20)            -6.504e-03  6.836e-03  1.732e+02  -0.951 0.342755    
-# scale(nsyl)              8.260e-03  1.640e-02  1.012e+04   0.504 0.614564    
-# scale(nPhon)            -4.562e-03  1.573e-02  2.871e+04  -0.290 0.771751    
-# scale(Length)            5.953e-03  6.906e-03  1.788e+02   0.862 0.389808    
-# scale(famfRes)          -2.200e-02  5.775e-03  1.766e+02  -3.809 0.000192 ***
-#   scale(pRT)               8.070e-02  2.002e-03  3.032e+04  40.300  < 2e-16 ***
-#   scale(pACC)              8.074e-03  1.934e-03  3.028e+04   4.175 2.99e-05 ***
-#   scale(Trial)             3.825e-04  8.532e-03  2.108e+02   0.045 0.964280    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-#Results
-#Unambiguous - Homonymy (b<0.01,SE<0.01,t=1.41,p=0.16)
-#Unambiguous - Polysemy (b=-0.02,SE=0.01,t=-2.70,p<0.01)
-
-#Print table with models summary
-tab_model(armstrong.rt.m.p, armstrong.rt.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "Armstrong & Plaut (2016) Replication Analysis on ELP Lexical Decision Data")
 
 #Plot
 armstrong.elp.rt.clean$AmbiguityType <- factor(armstrong.elp.rt.clean$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
@@ -1332,7 +921,7 @@ armstrong.elp.rt.p = ggplot(armstrong.elp.rt.ambiguity,
 grid.arrange(armstrong.elp.rt.p, nrow=1, ncol=1)
 dev.off()
 
-#Plot replication agaist original data 
+#Plot replication against original data 
 cairo_ps('figures\A2_SimulationAnalysis_Armstrong&Plaut2016_RT_Comparison.eps',
          family='sans', onefile=T, antialias='default', height=6, width=14);
 t0 <- textGrob("", gp=gpar(fontsize=28), just="centre")
@@ -1347,122 +936,6 @@ grid.arrange(arrangeGrob(t0, t1, t2, ncol=3, widths=c(0.15/3, 1/3.4, 2/3)),
              armstrong.elp.rt.p + theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()),
              widths = c(1/3, 1/3.4, 1/3.4), ncol=3), 
              nrow=3, heights = c(1/8, 0.5/8, 6.8/8))
-dev.off()
-##########################
-
-# Accuracy Analysis #
-##########################
-
-armstrong.elp.acc = armstrong.elp.clean
-summary(armstrong.elp.acc)
-
-#Set polysemes and unambiguous word to have a single completely dominant interpretation (biggest=100)
-armstrong.elp.acc[["eDom_biggest"]][is.na(armstrong.elp.acc[["eDom_biggest"]])] = 100
-describeBy(armstrong.elp.acc$eDom_biggest, group = armstrong.elp.acc$AmbiguityType)
-
-#Modelling followeing Armstorng & Plaut (2016) procedure
-armstrong.elp.acc$AmbiguityType <- relevel(armstrong.elp.acc$AmbiguityType, ref = "Unambiguous")
-#get the inverse of dominant frequency to have higher values for balanced homonymous
-armstrong.elp.acc$invDom = 1000/(armstrong.elp.acc$eDom_biggest)
-# UNAMBIGUOUS - HOMONYMS
-hSubset = subset(armstrong.elp.acc, AmbiguityType=="Unambiguous" | AmbiguityType=="Homonymy")
-armstrong.acc.m.h = glmer(ACC ~ 
-                            #Homonymy
-                            scale(invDom) +
-                            #control variable
-                            scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
-                            #scale(LogFreq_Subtlex) + scale(OLD) + scale(nSyll) + scale(nPhon) + scale(nLet) + scale(famfRes) +
-                            #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
-                            #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
-                            scale(pRT) + scale(pACC) + scale(Trial) +  #lexicality of previous trial removed
-                            #random effects
-                            (1|SubjID) + (1|Word), 
-                          hSubset,
-                          family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
-summary(armstrong.acc.m.h)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)              14.69759    4.54865   3.231  0.00123 ** 
-#   scale(invDom)            -0.11188    0.28499  -0.393  0.69463    
-# scale(ZipfFreq_Subtlex)   0.89042    0.34367   2.591  0.00957 ** 
-#   scale(OLD20)             -0.27243    0.38653  -0.705  0.48093    
-# scale(nsyl)              -4.23698  446.88240  -0.009  0.99244    
-# scale(nPhon)              3.81406  453.17809   0.008  0.99328    
-# scale(Length)             1.23820    0.43062   2.875  0.00404 ** 
-#   scale(famfRes)            0.95564    0.32978   2.898  0.00376 ** 
-#   scale(pRT)                0.26875    0.08759   3.068  0.00215 ** 
-#   scale(pACC)               0.14952    0.08437   1.772  0.07638 .  
-# scale(Trial)             -0.52812    0.09445  -5.592 2.25e-08 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-# UNAMBIGUOUS - POLYSEMY
-pSubset = subset(armstrong.elp.acc, AmbiguityType=="Unambiguous" | AmbiguityType=="Polysemy")
-armstrong.acc.m.p = glmer(ACC ~ 
-                            #Polysemy
-                            AmbiguityType +
-                            #control variable
-                            scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes) + 
-                            #scale(LogFreq_Subtlex) + scale(OLD) + scale(nSyll) + scale(nPhon) + scale(nLet) + scale(famfRes) +
-                            #previous trial data to eliminate auto-correlations that violate model assumptions (for discussion,
-                            #see Baayen & Milin, 2010; Barr et al., 2013; Bolker et al., 2009).
-                            scale(pRT) + scale(pACC) + scale(Trial) +  #lexicality of previous trial removed
-                            #random effects
-                            (1|SubjID) + (1|Word), 
-                          pSubset,
-                          family="binomial", control=glmerControl(optimizer="bobyqa",calc.derivs=F))
-summary(armstrong.acc.m.p)
-# Fixed effects:
-#   Estimate Std. Error z value Pr(>|z|)    
-# (Intercept)             11.17862    0.59294  18.853  < 2e-16 ***
-#   AmbiguityTypePolysemy    0.34080    0.27889   1.222  0.22171    
-# scale(ZipfFreq_Subtlex)  0.25029    0.16492   1.518  0.12910    
-# scale(OLD20)            -0.03596    0.18999  -0.189  0.84988    
-# scale(nsyl)              0.23747    0.29580   0.803  0.42209    
-# scale(nPhon)            -0.02734    0.25859  -0.106  0.91580    
-# scale(Length)            0.07049    0.19186   0.367  0.71331    
-# scale(famfRes)           0.47420    0.16577   2.861  0.00423 ** 
-#   scale(pRT)               0.28564    0.05317   5.372 7.78e-08 ***
-#   scale(pACC)              0.20170    0.04706   4.286 1.82e-05 ***
-#   scale(Trial)             0.00471    0.05298   0.089  0.92916    
-# ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-#Results
-#Unambiguous - Homonymy (b=-0.11,SE=0.28,t=-0.39,p=0.69)
-#Unambiguous - Polysemy (b=0.34,SE=0.27,t=1.22,p=0.22)
-
-#Print table with models summary
-tab_model(armstrong.acc.m.p, armstrong.acc.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "Armstrong & Plaut (2016) Replication Analysis on ELP Lexical Decision Data")
-
-#Plot
-armstrong.elp.acc$AmbiguityType <- factor(armstrong.elp.acc$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
-plotSubset = subset(armstrong.elp.acc, eDom_biggest<65 | AmbiguityType=="Polysemy" | AmbiguityType=="Unambiguous")
-armstrong.elp.acc.mean <- aggregate(ACC ~ AmbiguityType, plotSubset, function(x) c(mean = mean(x)))
-setnames(armstrong.elp.acc.mean, c("ACC"), c("acc.mean"))
-armstrong.elp.acc.se = aggregate(ACC ~ AmbiguityType, plotSubset, function(x) c(se = sd(x)/sqrt(length(x))))
-setnames(armstrong.elp.acc.se, c("ACC"), c("acc.se"))
-armstrong.elp.acc.ambiguity <- merge(armstrong.elp.acc.mean, armstrong.elp.acc.se)
-cairo_ps('figures\A2_SimulationAnalysis_Armstrong&Plaut2016_ELP_ACC.eps', 
-         family='sans', onefile=T, antialias='default', height=6, width=5);
-armstrong.elp.acc.p = ggplot(armstrong.elp.acc.ambiguity,
-                             aes(x=AmbiguityType, y=acc.mean, fill=AmbiguityType, color=AmbiguityType)) +
-  geom_bar(stat="identity", position=position_dodge(), color= "white", alpha = 0.5) +
-  geom_errorbar(aes(ymin=acc.mean-acc.se, ymax=acc.mean+acc.se), width=.2,
-                position=position_dodge(.9), color="black") + 
-  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") + #
-  coord_cartesian(ylim=c(0.85,1)) +
-  ylab("Mean Accuracy") +
-  xlab("Condition") +
-  scale_fill_manual(values=c("#0C5BB0FF", "#EE0011FF","#15983DFF"))
-grid.arrange(armstrong.elp.acc.p, nrow=1, ncol=1)
-dev.off()
-cairo_ps('figures\A2_SimulationAnalysis_Armstrong&Plaut2016_ELP_ACC&RT.eps', 
-         family='sans', onefile=T, antialias='default', height=4.5, width=9);
-grid.arrange(armstrong.elp.acc.p, armstrong.elp.rt.p, nrow=1, ncol=2, 
-             top=textGrob("ELP Lexical Decision", gp=gpar(fontsize=20)))
 dev.off()
 ##########################
 
@@ -1485,26 +958,9 @@ armstrong.semd$invDom = 1000/(armstrong.semd$eDom_biggest)
 hSubset = subset(armstrong.semd, AmbiguityType=="Unambiguous" | AmbiguityType=="Homonymy")
 armstrong.semd.m.h = lm(SemD ~ scale(invDom) +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes), 
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes), 
                         hSubset)
 summary(armstrong.semd.m.h)
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)              2.178710   0.008868 245.669  < 2e-16 ***
-#   scale(invDom)           -0.017966   0.009283  -1.935   0.0533 .  
-# scale(ZipfFreq_Subtlex)  0.137839   0.010412  13.238  < 2e-16 ***
-#   scale(OLD20)             0.016066   0.012003   1.339   0.1811    
-# scale(nsyl)             -0.007529   0.042119  -0.179   0.8582    
-# scale(nPhon)             0.020781   0.041605   0.499   0.6176    
-# scale(Length)           -0.059520   0.012351  -4.819 1.75e-06 ***
-#   scale(famfRes)          -0.075858   0.010705  -7.086 3.19e-12 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# 
-# Residual standard error: 0.2437 on 748 degrees of freedom
-# (10 observations deleted due to missingness)
-# Multiple R-squared:  0.2325,	Adjusted R-squared:  0.2253 
-# F-statistic: 32.37 on 7 and 748 DF,  p-value: < 2.2e-16
 
 # UNAMBIGUOUS - POLYSEMY
 pSubset = subset(armstrong.semd, AmbiguityType=="Unambiguous" | AmbiguityType=="Polysemy")
@@ -1513,32 +969,6 @@ armstrong.semd.m.p = lm(SemD ~ AmbiguityType +
                           scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes),  
                         pSubset)
 summary(armstrong.semd.m.p)
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)              2.202894   0.012188 180.743  < 2e-16 ***
-#   AmbiguityTypePolysemy   -0.005934   0.016019  -0.370    0.711    
-# scale(ZipfFreq_Subtlex)  0.126433   0.009466  13.356  < 2e-16 ***
-#   scale(OLD20)             0.012642   0.010975   1.152    0.250    
-# scale(nsyl)              0.004063   0.063483   0.064    0.949    
-# scale(nPhon)             0.016264   0.063304   0.257    0.797    
-# scale(Length)           -0.044524   0.011185  -3.981 7.47e-05 ***
-#   scale(famfRes)          -0.113147   0.009643 -11.734  < 2e-16 ***
-#   ---
-#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# 
-# Residual standard error: 0.2237 on 832 degrees of freedom
-# (3 observations deleted due to missingness)
-# Multiple R-squared:  0.2199,	Adjusted R-squared:  0.2133 
-# F-statistic:  33.5 on 7 and 832 DF,  p-value: < 2.2e-16
-
-#Results
-#Unambiguous - Homonymy (b=-0.02,SE<0.01,t=-1.93,p=0.53)
-#Unambiguous - Polysemy (b<0.01,SE=0.01,t=-0.37,p=0.71)
-
-#Print table with models summary
-tab_model(armstrong.semd.m.p, armstrong.semd.m.h, p.style = "both", show.intercept = FALSE, show.se = TRUE, show.ci = FALSE,
-          show.stat = TRUE, show.df = TRUE, string.se = "SE", string.stat = "t", 
-          string.est = "b", title = "Armstrong & Plaut (2016) Simulation")
 
 #Plot
 armstrong.semd$AmbiguityType <- factor(armstrong.semd$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
@@ -1564,6 +994,600 @@ grid.arrange(armstrong.semd.p, nrow=1, ncol=1)
 dev.off()
 ###############################
 
+
+
+#Additional analysis - Revisions
+#############################################################################################################################################
+
+# Read in Replicability Data
+############################
+
+repData = read.csv("data/SemanticDiversity/diversity_ReplicabilityData.csv")
+#Add frequency estimates from SUBTLEX UK (Van Heuven et al., 2013)
+subtlex = read.csv("Resources/Norms/Databases/SUBTLEX/SUBTLEX-UK.csv")
+setnames(subtlex, c("Spelling","LogFreq.Zipf."), c("Word","Freq"))
+repData = merge(repData, subtlex[,c("Word","Freq")], by="Word")
+repData = merge(repData, lexicalVars[,c("Word","Length")], by="Word")
+str(repData)
+summary(repData)
+
+repData$SemD_bnc = repData$SemD
+repData$SemD_w1000 = repData$SemD
+corpora = repData[,c("Word","SemD_bnc","SemD_uw","SemD_wp")]
+corpora$rep = "Corpora"
+corpora$rep <- as.factor(corpora$rep)
+summary(corpora)
+corporaLong = gather(corpora, condition, value, SemD_bnc:SemD_wp, factor_key=TRUE)
+summary(corporaLong)
+context = repData[,c("Word","SemD_w1000","SemD_w100")]
+context$rep = "Context Length"
+context$rep <- as.factor(context$rep)
+summary(context)
+contextLong = gather(context, condition, value, SemD_w1000:SemD_w100, factor_key=TRUE)
+summary(contextLong)
+repDataLong = rbind(corporaLong, contextLong)
+summary(repDataLong)
+figFolder = paste(wd, "figures/", sep="")
+
+#plot
+roddStimuli$Study = "Rodd et al. (2002)"
+roddStimuli$Study <- as.factor(roddStimuli$Study)
+summary(roddStimuli)
+armstrongStimuli = armstrongStimuli[!duplicated(armstrongStimuli[ , c("Word")]),]
+armstrongStimuli$Study = "Armstrong & Plaut (2016)"
+armstrongStimuli$Study <- as.factor(armstrongStimuli$Study)
+summary(armstrongStimuli)
+stimuli = rbind(roddStimuli[,c("Word", "AmbiguityType", "Study")],armstrongStimuli[,c("Word", "AmbiguityType", "Study")])
+summary(stimuli)
+semdAcross = merge(stimuli, repDataLong, by="Word", all.x = TRUE)
+semdAcross = subset(semdAcross, AmbiguityType!="Hybrid")
+summary(semdAcross)
+
+
+semdAcross$AmbiguityType <- factor(semdAcross$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
+semdAcross$condition = revalue(semdAcross$condition, c("SemD_w100"="Short (100w)", 
+                                                       "SemD_w1000"="Long (1000w)",
+                                                       "SemD_bnc"="BNC",
+                                                       "SemD_uw"="ukWaC",
+                                                       "SemD_wp"="Wackypedia"))
+semdAcross$Corpora = semdAcross$condition
+semdAcross$ContextLength = semdAcross$condition
+summary(semdAcross)
+
+semdAcross = semdAcross[complete.cases(semdAcross), ]
+
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Replicability_AcrossCorpora&ContextLength.eps',sep=''),
+         family='sans', onefile=T, antialias='default', height=8, width=9);
+f1 = ggplot(subset(semdAcross, rep=="Corpora"), aes(Corpora, value, fill=AmbiguityType)) +
+  geom_boxplot(outlier.shape=NA)+
+  facet_wrap(~Study) + 
+  geom_point(position=position_jitterdodge(), alpha=1/10) +
+  labs(y = "Semantic Diversity")+ 
+  theme(axis.text=element_text(size=15), 
+        axis.title=element_text(size=15), 
+        strip.text.x = element_text(size=15),
+        legend.text = element_text(size=14),
+        legend.title = element_text(size=15),
+        legend.position="none") +
+  ylim(1,3.5)
+f2 = ggplot(subset(semdAcross, rep=="Context Length"), aes(ContextLength, value, fill=AmbiguityType)) +
+  geom_boxplot(outlier.shape=NA)+
+  facet_wrap(~Study)+ 
+  geom_point(position=position_jitterdodge(), alpha=1/10) +
+  labs(y = "Semantic Diversity") + 
+  theme(axis.text=element_text(size=15), 
+        axis.title=element_text(size=15), 
+        strip.text.x = element_text(size=15),
+        legend.text = element_text(size=14),
+        legend.title = element_text(size=15),
+        legend.position="bottom")+
+  ylim(1,3.5)
+grid.arrange(f1, f2, nrow = 2, 
+             heights = c(0.463,0.537),
+             top=textGrob("Semantic Diverisity by Lexical Ambiguity across \n Corpora and Context Length", gp=gpar(fontsize=20)))
+dev.off()
+
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp2_SemD_wp.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=6, width=8);
+par(mfrow=c(2,1))
+pirateplot(formula = value ~ AmbiguityType + Corpora + Study,
+           data = subset(semdAcross, rep=="Corpora"),
+           ylab = "Semantic Diversity",
+           ylim = c(0,3.5),
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+
+pirateplot(formula = value ~ AmbiguityType + ContextLength + Study,
+           data = subset(semdAcross, rep=="Context Length"),
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+############################
+
+# Rodd et al. (2002) EXP 1 #
+############################
+
+# Get data 
+rodd.exp1.rep = merge(roddStimuli, repData, by="Word", all.x = TRUE)
+#number of meanings/senses
+rodd.exp1.rep = merge(rodd.exp1.rep, wordsmythDict, by="Word", all.x = TRUE)
+#lexical neighborhood
+rodd.exp1.rep = merge(rodd.exp1.rep, blpStimuli[c("Word","coltN")], by="Word", all.x = TRUE)
+#Concreteness
+rodd.exp1.rep = merge(rodd.exp1.rep, concr[c("Word","Conc.M")], by="Word", all.x = TRUE)
+summary(rodd.exp1.rep)
+
+rodd.exp1.rep$Meanings <- relevel(rodd.exp1.rep$Meanings, ref = "One")
+rodd.exp1.rep.ww.m = lm(SemD_w100 ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
+                        rodd.exp1.rep)
+summary(rodd.exp1.rep.ww.m)
+
+rodd.exp1.rep.wp.m = lm(SemD_wp ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
+                        rodd.exp1.rep)
+summary(rodd.exp1.rep.wp.m)
+
+rodd.exp1.rep.uw.m = lm(SemD_uw ~ Meanings + scale(nSenses_WMD) + scale(coltN) + scale(Freq) + scale(Length) + scale(Conc.M),  
+                        rodd.exp1.rep)
+summary(rodd.exp1.rep.uw.m)
+
+rodd.exp1.semd.rep.ww.senses.e = as.data.frame(effect(term="scale(nSenses_WMD)", mod=rodd.exp1.rep.ww.m, xlevels=list(nSenses_WMD=2)))
+rodd.exp1.semd.rep.ww.meanings.e = as.data.frame(effect(term="Meanings", mod=rodd.exp1.rep.ww.m))
+rodd.exp1.semd.rep.ww.meanings.e$Meanings <- relevel(rodd.exp1.semd.rep.ww.meanings.e$Meanings, ref = "One")
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp1_SemD_effects_w100.eps',sep=''),
+         family='sans', onefile=T, antialias='default', height=4.5, width=9);
+s = ggplot(rodd.exp1.semd.rep.ww.senses.e, aes(x=nSenses_WMD, y=fit)) + 
+  ylim(0,3.5)+
+  geom_point() + 
+  geom_line(size=1.4) +
+  geom_ribbon(aes(ymin=lower,ymax=upper),alpha=0.3, colour = NA) + 
+  labs(x= "Number of Senses", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") 
+m= ggplot(rodd.exp1.semd.rep.ww.meanings.e, aes(x=Meanings, y=fit, fill=Meanings)) + 
+  ylim(0,3.5)+
+  geom_bar(stat="identity", position="dodge", color="white", alpha = 0.5) + 
+  geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.2, position=position_dodge(width=0.9))+
+  labs(x= "Meanings", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_manual(values=c("#2F86FFFF", "#DE0012FF")) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none")
+grid.arrange(s, m, nrow=1, ncol=2,
+             top=textGrob("Semantic Diversity", gp=gpar(fontsize=20)))
+dev.off()
+
+
+rodd.exp1.semd.rep.wp.senses.e = as.data.frame(effect(term="scale(nSenses_WMD)", mod=rodd.exp1.rep.wp.m, xlevels=list(nSenses_WMD=2)))
+rodd.exp1.semd.rep.wp.meanings.e = as.data.frame(effect(term="Meanings", mod=rodd.exp1.rep.wp.m))
+rodd.exp1.semd.rep.wp.meanings.e$Meanings <- relevel(rodd.exp1.semd.rep.wp.meanings.e$Meanings, ref = "One")
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp1_SemD_effects_wp.eps',sep=''),
+         family='sans', onefile=T, antialias='default', height=4.5, width=9);
+s = ggplot(rodd.exp1.semd.rep.wp.senses.e, aes(x=nSenses_WMD, y=fit)) + 
+  ylim(0,3.5)+
+  geom_point() + 
+  geom_line(size=1.4) +
+  geom_ribbon(aes(ymin=lower,ymax=upper),alpha=0.3, colour = NA) + 
+  labs(x= "Number of Senses", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") 
+m= ggplot(rodd.exp1.semd.rep.wp.meanings.e, aes(x=Meanings, y=fit, fill=Meanings)) + 
+  ylim(0,3.5)+
+  geom_bar(stat="identity", position="dodge", color="white", alpha = 0.5) + 
+  geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.2, position=position_dodge(width=0.9))+
+  labs(x= "Meanings", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_manual(values=c("#2F86FFFF", "#DE0012FF")) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none")
+grid.arrange(s, m, nrow=1, ncol=2,
+             top=textGrob("Semantic Diversity", gp=gpar(fontsize=20)))
+dev.off()
+
+
+rodd.exp1.semd.rep.uw.senses.e = as.data.frame(effect(term="scale(nSenses_WMD)", mod=rodd.exp1.rep.uw.m, xlevels=list(nSenses_WMD=2)))
+rodd.exp1.semd.rep.uw.meanings.e = as.data.frame(effect(term="Meanings", mod=rodd.exp1.rep.uw.m))
+rodd.exp1.semd.rep.uw.meanings.e$Meanings <- relevel(rodd.exp1.semd.rep.uw.meanings.e$Meanings, ref = "One")
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp1_SemD_effects_uw.eps',sep=''),
+         family='sans', onefile=T, antialias='default', height=4.5, width=9);
+s = ggplot(rodd.exp1.semd.rep.uw.senses.e, aes(x=nSenses_WMD, y=fit)) + 
+  ylim(0,3.5)+
+  geom_point() + 
+  geom_line(size=1.4) +
+  geom_ribbon(aes(ymin=lower,ymax=upper),alpha=0.3, colour = NA) + 
+  labs(x= "Number of Senses", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") 
+m= ggplot(rodd.exp1.semd.rep.uw.meanings.e, aes(x=Meanings, y=fit, fill=Meanings)) + 
+  ylim(0,3.5)+
+  geom_bar(stat="identity", position="dodge", color="white", alpha = 0.5) + 
+  geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.2, position=position_dodge(width=0.9))+
+  labs(x= "Meanings", y="Semantic Diversity") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_manual(values=c("#2F86FFFF", "#DE0012FF")) +
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none")
+grid.arrange(s, m, nrow=1, ncol=2,
+             top=textGrob("Semantic Diversity", gp=gpar(fontsize=20)))
+dev.off()
+#############################
+
+# Rodd et al. (2002) EXP 2 #
+############################
+
+# Get data 
+rodd.semd.rep = merge(roddStimuli, repData, by="Word", all.x = TRUE)
+summary(rodd.semd.rep)
+
+setnames(rodd.semd.rep, c("SemD"), c("SemD_w1000"))
+rodd.semd.rep$Diff = rodd.semd.rep$SemD_wp - rodd.semd.rep$SemD_w1000
+par(mfrow=c(1,1))
+rodd.semd.rep$AmbiguityType <- factor(rodd.semd.rep$AmbiguityType, levels = c("Unambiguous", "Polysemy","Homonymy"))
+rodd.semd.rep = subset(rodd.semd.rep, AmbiguityType!="Hybrid")
+
+
+####### Word Window 
+#ByItem ANOVA
+rodd.semd.rep.item <- aggregate(SemD_w100 ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.semd.rep)
+rodd.semd.rep.item.aov = aov(SemD_w100 ~ Senses*Meanings + Freq + Length, data = rodd.semd.rep.item)
+summary(rodd.semd.rep.item.aov)
+
+describeBy(rodd.semd.rep.item$SemD_w100, group = rodd.semd.rep.item$Senses)
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_w100, by=list(rodd.semd.rep.item$Senses), FUN=mean)[2])) #<0.01 difference
+describeBy(rodd.semd.rep.item$SemD_w100, group = rodd.semd.rep.item$Meanings) 
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_w100, by=list(rodd.semd.rep.item$Meanings), FUN=mean)[2])) #0.05 difference
+
+#Plot
+rodd.semd.rep.item$Meanings <- relevel(rodd.semd.rep.item$Meanings, ref = "One")
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp2_SemD_ContextLengthReplicability.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=6, width=8);
+par(mfrow=c(1,2))
+pirateplot(formula = SemD_w100 ~ Senses,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_w100 ~ Meanings,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+dev.off()
+
+####### Wackypedia
+#ByItem ANOVA
+rodd.semd.rep.item <- aggregate(SemD_wp ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.semd.rep)
+rodd.semd.rep.item.aov = aov(SemD_wp ~ Senses*Meanings + Freq + Length, data = rodd.semd.rep.item)
+summary(rodd.semd.rep.item.aov)
+
+describeBy(rodd.semd.rep.item$SemD_wp, group = rodd.semd.rep.item$Senses)
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_wp, by=list(rodd.semd.rep.item$Senses), FUN=mean)[2])) #0.12 difference
+describeBy(rodd.semd.rep.item$SemD_wp, group = rodd.semd.rep.item$Meanings) 
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_wp, by=list(rodd.semd.rep.item$Meanings), FUN=mean)[2])) #0.04 difference
+
+#Plot
+rodd.semd.rep.item$Meanings <- relevel(rodd.semd.rep.item$Meanings, ref = "One")
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp2_SemD_wp.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=6, width=8);
+par(mfrow=c(1,2))
+pirateplot(formula = SemD_wp ~ Senses,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_wp ~ Meanings,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+dev.off()
+
+####### UkWac 
+#ByItem ANOVA
+rodd.semd.rep.item <- aggregate(SemD_uw ~ Word + Senses + Meanings + Freq + Length, FUN=mean, rodd.semd.rep)
+rodd.semd.rep.uw.aov = aov(SemD_uw ~ Senses*Meanings + Freq + Length, data = rodd.semd.rep.item)
+summary(rodd.semd.rep.uw.aov)
+
+describeBy(rodd.semd.rep.item$SemD_uw, group = rodd.semd.rep.item$Senses)
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_uw, by=list(rodd.semd.rep.item$Senses), FUN=mean)[2])) #0.04 difference
+describeBy(rodd.semd.rep.item$SemD_uw, group = rodd.semd.rep.item$Meanings) 
+diff(as.matrix(aggregate(rodd.semd.rep.item$SemD_uw, by=list(rodd.semd.rep.item$Meanings), FUN=mean)[2])) #0.03 difference
+
+#Plot
+rodd.semd.rep.item$Meanings <- relevel(rodd.semd.rep.item$Meanings, ref = "One")
+cairo_ps(paste(figFolder,'Replication&Simulation_Rodd2001_Exp2_SemD_uw.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=6, width=8);
+par(mfrow=c(1,2), title="UkWac")
+pirateplot(formula = SemD_uw ~ Senses,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_uw ~ Meanings,
+           data = rodd.semd.rep.item,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+dev.off()
+############################
+
+# Armstrong & Plaut (2016) #
+############################
+
+
+# Get data 
+armstrongStimuli = armstrongStimuli[!duplicated(armstrongStimuli[ , c("Word")]),]
+armstrong.semd.rep = merge(armstrongStimuli, repData[c("Word","SemD","SemD_w100","SemD_wp","SemD_uw")], by="Word", all.y = TRUE)
+armstrong.semd.rep = subset(armstrong.semd.rep, AmbiguityType!="Hybrid")
+summary(armstrong.semd.rep)
+
+#Modelling
+armstrong.semd.rep$AmbiguityType <- relevel(armstrong.semd.rep$AmbiguityType, ref = "Unambiguous")
+#Set polysemes and unambiguous word to have a single completely dominant interpretation (biggest=100)
+armstrong.semd.rep[["eDom_biggest"]][is.na(armstrong.semd.rep[["eDom_biggest"]])] = 100
+#get the inverse of dominant frequency to have higher values for balanced homonymous
+armstrong.semd.rep$invDom = 1000/(armstrong.semd.rep$eDom_biggest)
+
+# UNAMBIGUOUS - HOMONYMS
+hSubset = subset(armstrong.semd.rep, AmbiguityType=="Unambiguous" | AmbiguityType=="Homonymy")
+#####Word window
+armstrong.semd.ww.m.h = lm(SemD_w100 ~ scale(invDom) +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes), 
+                           hSubset)
+summary(armstrong.semd.ww.m.h)
+
+#####Wackypedia
+armstrong.semd.wp.m.h = lm(SemD_wp ~ scale(invDom) +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes), 
+                           hSubset)
+summary(armstrong.semd.wp.m.h)
+
+#####Word window
+armstrong.semd.uw.m.h = lm(SemD_uw ~ scale(invDom) +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes), 
+                           hSubset)
+summary(armstrong.semd.uw.m.h)
+
+# UNAMBIGUOUS - POLYSEMY
+pSubset = subset(armstrong.semd.rep, AmbiguityType=="Unambiguous" | AmbiguityType=="Polysemy")
+###Word window
+armstrong.semd.ww.m.p = lm(SemD_w100 ~ AmbiguityType +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes),  
+                           pSubset)
+summary(armstrong.semd.ww.m.p)
+
+
+###Wackypedia
+armstrong.semd.wp.m.p = lm(SemD_wp ~ AmbiguityType +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes),  
+                           pSubset)
+summary(armstrong.semd.wp.m.p)
+
+
+###UkWac
+armstrong.semd.uw.m.p = lm(SemD_uw ~ AmbiguityType +
+                             #control variable
+                             scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes),  
+                           pSubset)
+summary(armstrong.semd.uw.m.p)
+
+
+
+#Plot
+armstrong.semd.rep$AmbiguityType <- factor(armstrong.semd.rep$AmbiguityType, levels = c("Homonymy", "Unambiguous", "Polysemy"))
+plotSubset = subset(armstrong.semd.rep, eDom_biggest<65 | AmbiguityType=="Polysemy" | AmbiguityType=="Unambiguous")
+###Context Length
+armstrong.semd.mean <- aggregate(SemD_w100 ~ AmbiguityType, plotSubset, function(x) c(mean = mean(x)))
+setnames(armstrong.semd.mean, c("SemD_w100"), c("semd.mean"))
+armstrong.semd.se = aggregate(SemD_w100 ~ AmbiguityType, plotSubset, function(x) c(se = sd(x)/sqrt(length(x))))
+setnames(armstrong.semd.se, c("SemD_w100"), c("semd.se"))
+armstrong.semd.ambiguity <- merge(armstrong.semd.mean, armstrong.semd.se)
+cairo_ps(paste(figFolder,'Replication&Simulation_Armstrong&Plaut2016_SemD_ContextLengthReplicability.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=4.5, width=5);
+armstrong.semd.p = ggplot(armstrong.semd.ambiguity,
+                          aes(x=AmbiguityType, y=semd.mean, fill=AmbiguityType, color=AmbiguityType)) +
+  geom_bar(stat="identity", position=position_dodge(), color= "white", alpha = 0.5) +
+  geom_errorbar(aes(ymin=semd.mean-semd.se, ymax=semd.mean+semd.se), width=.2,
+                position=position_dodge(.9), color="black") + 
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") + #
+  coord_cartesian(ylim=c(0,3)) +
+  ylab("Semantic Diversity") +
+  xlab("Condition") +
+  scale_fill_manual(values=c("#0C5BB0FF", "#EE0011FF","#15983DFF"))
+grid.arrange(armstrong.semd.p, nrow=1, ncol=1)
+dev.off()
+###Wakypedia
+armstrong.semd.mean <- aggregate(SemD_wp ~ AmbiguityType, plotSubset, function(x) c(mean = mean(x)))
+setnames(armstrong.semd.mean, c("SemD_wp"), c("semd.mean"))
+armstrong.semd.se = aggregate(SemD_wp ~ AmbiguityType, plotSubset, function(x) c(se = sd(x)/sqrt(length(x))))
+setnames(armstrong.semd.se, c("SemD_wp"), c("semd.se"))
+armstrong.semd.ambiguity <- merge(armstrong.semd.mean, armstrong.semd.se)
+cairo_ps(paste(figFolder,'Replication&Simulation_Armstrong&Plaut2016_SemD_wp.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=4.5, width=5);
+armstrong.semd.wp.p = ggplot(armstrong.semd.ambiguity,
+                             aes(x=AmbiguityType, y=semd.mean, fill=AmbiguityType, color=AmbiguityType)) +
+  geom_bar(stat="identity", position=position_dodge(), color= "white", alpha = 0.5) +
+  geom_errorbar(aes(ymin=semd.mean-semd.se, ymax=semd.mean+semd.se), width=.2,
+                position=position_dodge(.9), color="black") + 
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") + #
+  coord_cartesian(ylim=c(0,3)) +
+  ylab("Semantic Diversity") +
+  xlab("Condition") +
+  ggtitle("Wackypedia") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual(values=c("#0C5BB0FF", "#EE0011FF","#15983DFF"))
+grid.arrange(armstrong.semd.wp.p, nrow=1, ncol=1)
+dev.off()
+###UkWac
+armstrong.semd.mean <- aggregate(SemD_uw ~ AmbiguityType, plotSubset, function(x) c(mean = mean(x)))
+setnames(armstrong.semd.mean, c("SemD_uw"), c("semd.mean"))
+armstrong.semd.se = aggregate(SemD_uw ~ AmbiguityType, plotSubset, function(x) c(se = sd(x)/sqrt(length(x))))
+setnames(armstrong.semd.se, c("SemD_uw"), c("semd.se"))
+armstrong.semd.ambiguity <- merge(armstrong.semd.mean, armstrong.semd.se)
+cairo_ps(paste(figFolder,'Replication&Simulation_Armstrong&Plaut2016_SemD_uw.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=4.5, width=5);
+armstrong.semd.uw.p = ggplot(armstrong.semd.ambiguity,
+                             aes(x=AmbiguityType, y=semd.mean, fill=AmbiguityType, color=AmbiguityType)) +
+  geom_bar(stat="identity", position=position_dodge(), color= "white", alpha = 0.5) +
+  geom_errorbar(aes(ymin=semd.mean-semd.se, ymax=semd.mean+semd.se), width=.2,
+                position=position_dodge(.9), color="black") + 
+  theme(axis.text=element_text(size=15), axis.title=element_text(size=15),legend.position = "none") + #
+  coord_cartesian(ylim=c(0,3)) +
+  ylab("Semantic Diversity") +
+  xlab("Condition") +
+  ggtitle("UkWac") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual(values=c("#0C5BB0FF", "#EE0011FF","#15983DFF"))
+grid.arrange(armstrong.semd.uw.p, nrow=1, ncol=1)
+dev.off()
+
+cairo_ps(paste(figFolder,'Replication&Simulation_Armstrong&Plaut2016_SemD_CorporaReplicability.eps',sep=''), 
+         family='sans', onefile=T, antialias='default', height=4.5, width=10);
+grid.arrange(armstrong.semd.wp.p, armstrong.semd.uw.p, nrow=1, ncol=2)
+dev.off()
+
+par(mfrow=c(2,2))
+pirateplot(formula = SemD_w100 ~ AmbiguityType,
+           data = armstrong.semd.rep,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           main = "BNC (1,000-WordWindow)",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_w100 ~ AmbiguityType,
+           data = armstrong.semd.rep,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           main = "BNC (100-WordWindow)",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_wp ~ AmbiguityType,
+           data = armstrong.semd.rep,
+           ylab = "Semantic Diversity",
+           theme = 2, 
+           main = "Wackypedia",
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+pirateplot(formula = SemD_uw ~ AmbiguityType,
+           data = armstrong.semd.rep,
+           ylab = "Semantic Diversity",
+           main = "UkWac",
+           theme = 2, 
+           inf.method = "se",# Start with theme 2
+           inf.f.col = "black",
+           inf.b.col = "black",
+           #inf.f.o = 0, # Turn off inf fill
+           #inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           point.col = "black")
+
+
+###############################
 
 ##############################################################################################################################################
 
