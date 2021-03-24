@@ -1,6 +1,6 @@
 # What is semantic diversity and why does it facilitate visual word recognition?
  
-This repository contains data, materials and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (2020). A pre-print of the manuscript accepted for publication in the journal Behavior Research Methods is also available on [PsyArXiv](https://psyarxiv.com/95qkv).
+This repository contains data, materials, and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (2020). 
 
 
 
