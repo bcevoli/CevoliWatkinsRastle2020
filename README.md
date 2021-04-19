@@ -2,7 +2,7 @@
  
 This repository contains data, materials, and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (2020). 
 
-
+Update 24/03/2021: code has been updated to reflect the final published paper.
 
 ## Instruction
 
