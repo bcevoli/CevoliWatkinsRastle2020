@@ -966,7 +966,7 @@ summary(armstrong.semd.m.h)
 pSubset = subset(armstrong.semd, AmbiguityType=="Unambiguous" | AmbiguityType=="Polysemy")
 armstrong.semd.m.p = lm(SemD ~ AmbiguityType +
                           #control variable
-                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(nPhon) + scale(Length) + scale(famfRes),  
+                          scale(ZipfFreq_Subtlex) + scale(OLD20) + scale(nsyl) + scale(Length) + scale(famfRes),  
                         pSubset)
 summary(armstrong.semd.m.p)
 
