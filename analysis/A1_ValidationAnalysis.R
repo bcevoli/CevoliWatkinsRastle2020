@@ -42,8 +42,8 @@ lexicalVars = read.csv("stimuli/lexicalVariables.csv")
 lexicalVars$Length = nchar(as.character(lexicalVars$Word))
 setnames(lexicalVars, c("SemD_P2_W"), c("SemD"))
 lexicalVars = lexicalVars[,c("Word","SemD","Freq","Length")]
-#Add Age of Acquisition Ratings from Kuperman et al. (2012)
-Kuperman2012 = read.csv("data/***") #to download age of acquisition norms from Kuperman et al. (2012) 
+#Add Age of Acquisition Ratings from Kuperman et al. (2012) downloaded from http://crr.ugent.be/archives/806 
+Kuperman2012 = read.csv("data/AoA_Kuperman2012.csv") 
 setnames(Kuperman2012, c("Rating.Mean"), c("AoA"))
 lexicalVars = merge(lexicalVars, Kuperman2012[,c("Word","AoA")], by="Word", all.x = TRUE)
 summary(lexicalVars)
