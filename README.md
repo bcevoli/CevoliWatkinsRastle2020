@@ -1,3 +1,5 @@
+[![DOI](https://sandbox.zenodo.org/badge/235864781.svg)](https://sandbox.zenodo.org/badge/latestdoi/235864781)
+
 # What is semantic diversity and why does it facilitate visual word recognition?
  
 This repository contains data, materials, and code for computing contextual representations and the semantic diversity metric from Cevoli, Watkins & Rastle (2020). 
